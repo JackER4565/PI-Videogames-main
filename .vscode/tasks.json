@@ -1,0 +1,41 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "el fronen",
+            "type": "shell",
+            "command": "npm run dev",
+            "options": {
+                "cwd": "${workspaceFolder}/Front"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "group": "DEVELOPMENT"
+            }
+        },
+        {
+            "label": "el baken",
+            "type": "shell",
+            "command": "npm start",
+            "options": {
+                "cwd": "${workspaceFolder}/api"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "group": "DEVELOPMENT"
+            }
+        },
+        {
+            "label": "DEVELOPMENT ENVIRONMENT",
+            "dependsOn": [
+                "el fronen",
+                "el baken"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
