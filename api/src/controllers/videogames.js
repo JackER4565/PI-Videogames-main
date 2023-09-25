@@ -4,12 +4,22 @@ require("dotenv").config();
 const { API_KEY } = process.env;
 const axios = require("axios");
 const Videogame = require("../db.js").Videogame;
+const Genre = require("../db.js").Genre;
 
 const videogames = async (req, res) => {
 	// const name = req.query.name;
 	// if (!name) {
 	try {
-		const videogamesDB = await Videogame.findAll();
+		const videogamesDB = await Videogame.findAll({
+			attributes: ['id', 'name', 'background_image'],
+			include: {
+				model: Genre,
+				attributes: ['name'],
+				through: {
+					attributes: []
+				}
+			}
+		});
 		// console.log("################## videogame DB ##################")
 		// console.log(videogamesDB)
 		const videogamesApi = (
@@ -17,9 +27,17 @@ const videogames = async (req, res) => {
 				`https://api.rawg.io/api/games?key=${API_KEY}&page_size=40`
 			)
 		).data.results;
-		// console.log("################## videogame API ##################")
-		// console.log(videogamesApi[0])
-		const completeVideogames = videogamesDB.concat(videogamesApi);
+		const cleanVideogamesApi = videogamesApi.map((videogame) => {
+			return {
+				id: videogame.id,
+				name: videogame.name,
+				background_image: videogame.background_image,
+				genres: videogame.genres,
+			};
+		});
+
+
+		const completeVideogames = videogamesDB.concat(cleanVideogamesApi);
 		return res.status(200).json(completeVideogames);
 	} catch (error) {
 		console.log(error);

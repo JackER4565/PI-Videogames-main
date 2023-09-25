@@ -6,13 +6,23 @@
     align-items: center;
     z-index: 1000;
     width: 100%;
-    /* border-radius: 10px; */
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     padding: 30px;
     box-sizing: border-box;
-    /* transition: all 0.3s ease-in-out; */
-    /* cursor: pointer; */
+    transition: all 0.3s ease-in-out; 
     position: fixed;
     top: 0px;
     background: #242424;
+    height: 127px;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+}
+
+.link {
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: 150px;
 }

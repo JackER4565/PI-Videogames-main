@@ -1,13 +1,16 @@
 import styles from "./Detail.module.css";
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link} from "react-router-dom";
 import axios from "axios";
-
+import { showServerMessage } from "../../server-messages";
 function Detail() {
 	const [videogame, setVideogame] = useState("");
 	const [loading, setLoading] = useState(true);
-	const { id } = useParams();
+	const { param } = useParams();
 
+	const id = param.split("&")[0];
+	const pagenumber = param.split("&")[1];
+	
 	useEffect(() => {
 		setLoading(true);
 		const endpoint = `http://localhost:3001/videogames/${id}`;
@@ -21,8 +24,7 @@ function Detail() {
 				}
 			})
 			.catch((error) => {
-				console.error(error);
-				setVideogame("Fetch error.");
+				showServerMessage("Detail get = " + error.message, "error");
 			}).finally(() => {
 				setLoading(false);
 			});
@@ -33,7 +35,7 @@ function Detail() {
 	}
 	return (
 		<div>
-			<Link className={styles.link} to="/home">Volver</Link>
+			<Link className={styles.link} to={`/home/${pagenumber}`}>Volver</Link>
 			<div className={styles.container}>
 				<div className={styles.card}>
 					<h1>{videogame.name}</h1>

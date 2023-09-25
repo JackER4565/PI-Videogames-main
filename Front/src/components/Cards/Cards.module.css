@@ -5,6 +5,8 @@
     align-items: center;
     width: 100%;
     padding-bottom: 64px;
+    position: relative;
+    top: 50px;
 }
 
 .pressStart{

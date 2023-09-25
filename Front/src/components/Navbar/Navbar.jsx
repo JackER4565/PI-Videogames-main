@@ -3,13 +3,24 @@ import SearchBar from "../SearchBar/SearchBar";
 import Filters from "../Filters/Filters";
 import Getters from "../Getters/Getters";
 
-function Navbar({genres, setLoading}) {
+import { Link } from 'react-router-dom';
+
+import logo from '../../assets/logo.png'
+
+function Navbar({setLoading}) {
 
   return (
     <div className={style.container}>
-        <Filters genres={genres}/>
+        <Link to="/home" className={style.link}>
+          <img src={logo} alt="logo" className={style.logo}/>
+        </Link>
+        <Filters />
         <SearchBar />
         <Getters setLoading={setLoading}/>
+        
+				<Link to="/add">
+					<button>Agregar Videojuego</button>
+				</Link>
     </div>
   )
 }

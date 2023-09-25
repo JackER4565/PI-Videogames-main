@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styles from "./SearchBar.module.css";
 import { useDispatch } from "react-redux";
-import { buscarVideogame } from "../../Redux/Actions";
+import { BUSCARNAME } from "../../Redux/Actions";
+import { showServerMessage } from "../../server-messages";
 
 export default function SearchBar() {
 	const [input, setInput] = useState("");
@@ -9,15 +10,18 @@ export default function SearchBar() {
 
 	const buscarVideojuego = () => {
 		if (input === "") {
+			showServerMessage("Input vacio", "error");
 			return;
 		}
+
+		dispatch({ type: BUSCARNAME, payload: input });
 		setInput("");
-		dispatch(buscarVideogame(input));
 	};
 
 
 	const handleChange = (e) => {
 		setInput(e.target.value);
+		
 	};
 
 	return (

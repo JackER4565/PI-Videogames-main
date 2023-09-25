@@ -17,5 +17,6 @@ router.post('/videogames', postVideogames);
 // DB y API
 router.get('/genres', genres);
 router.get('/videogames/:idVideogame', searchVideogames);
+router.get('/videogames/s', searchVideogames);
 
 module.exports = router;

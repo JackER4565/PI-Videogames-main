@@ -1,19 +1,43 @@
+import { useDispatch, useSelector } from "react-redux";
+import { ORDEN, GENFILTER } from "../../Redux/Actions";
 
-function Filters({genres}) {
+import style from "./Filters.module.css";
+
+function Filters() {
+  const dispatch = useDispatch();
+
+
+  const generos = useSelector((state) => state.genres);
+  const handleGenChange = () => {
+    return (e) => {
+      console.log(e.target.value)
+      dispatch({ type: GENFILTER, payload: e.target.value });
+    };
+  };
+
+  const handleOrden = () => {
+    return (e) => {
+      dispatch({ type: ORDEN, payload: e.target.value });
+
+    }
+  }
 
   return (
-    <div>
-    <select>
-        <option value="all">All</option>
-        <option value="api">API</option>
-        <option value="db">DB</option>
+    <div className={style.container}>
+    <select onChange={handleOrden()}>
+        <option value="">ORDEN</option>
+        <option value="asc">Asc</option>
+        <option value="desc">Desc</option>
     </select>
-    {genres ? genres.map((genre,i) => (
-        <select key={genre.id}>
-            {i === 0 && <option value="all">All</option>}
-            <option value={genre.name}>{genre.name}</option>
-        </select>
-    )) : ''}
+    <select onChange={handleGenChange()}>
+        <option value="">GENERO</option>
+        <option value="all">All</option>
+        {generos.map((g) => (
+            <option key={g.id} value={g.id}>{g.name}</option>
+        ))}
+    </select>
+        
+
     </div>
   )
 }

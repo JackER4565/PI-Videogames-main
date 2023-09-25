@@ -1,25 +1,42 @@
-import { VIDEOGAMES, GENRES } from "./Actions.js";
+import { VIDEOGAMES, GENRES, ORDEN, BUSCARNAME, GENFILTER} from "./Actions.js";
 
 
 const initialState = {
-    access: false,
-	myFavorites: [],
 	videogames: [],
+	// videogamesName: [],
 	genres: [],
+	orden: "",
+	buscarNombre: "",
+	genFilter: "",
 };
 
 const rootReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case GENFILTER:
+			return {
+				...state,
+				genFilter: action.payload,
+			};
+		case BUSCARNAME:
+			return {
+				...state,
+				buscarNombre: action.payload,
+			};
+		case ORDEN:
+			return {
+				...state,
+				orden: action.payload,
+			};
 		case VIDEOGAMES:
-			console.log("action.payload.access", action.payload)
 			return {
 				...state,
 				videogames: action.payload,
+				// videogamesName: action.payload.map((e) => e.name),
 			};
 		case GENRES:
 			return {
 				...state,
-				genres: [...state.genres].push(action.payload),
+				genres: action.payload,
 			};
 		default:
 			return state;

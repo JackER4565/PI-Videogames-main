@@ -15,19 +15,19 @@ module.exports = (sequelize) => {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
-			description: {
+			description_raw: {
 				type: DataTypes.TEXT,
 				allowNull: false,
 			},
-			plataform: {
+			platforms: {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
-			image: {
+			background_image: {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
-			releaseDate: {
+			released: {
 				type: DataTypes.DATE,
 				allowNull: false,
 			},
@@ -39,7 +39,6 @@ module.exports = (sequelize) => {
 		{ timestamps: false }
 	);
 };
-
 // MODELO 1 | Videogames
 
 // ID (deben ser distintos a los que vienen de la API). *

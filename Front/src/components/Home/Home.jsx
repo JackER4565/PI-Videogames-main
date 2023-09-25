@@ -4,30 +4,89 @@ import Footer from "../Footer/Footer.jsx";
 import styles from "./Home.module.css";
 
 import { useSelector } from "react-redux";
-import {  useState } from "react";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useMemo } from "react";
 
+import axios from "axios";
 
-// import axios from "axios";
+import { showServerMessage } from "../../server-messages";
 
 function Home() {
+	const { pagenumber } = useParams();
+
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [videogamesPerPage] = useState(5);
-	console.log("loading", loading);
-	// async function a() {
-	// 	await axios.get("http://localhost:3001/videogames");
-	// 	await axios.get("http://localhost:3001/genres");
-	// }
-	// a();
-	// const dispatch = useDispatch();
-	// useEffect(() => {
-	// 	dispatch(videogames());
-	// }, [dispatch, videogames]);
+	const [videogamesPerPage, setVideogamesPerPage] = useState(5);
 
-	const videogames = useSelector((state) => state.videogames);
-	console.log("videogames >>>>>>>>>", videogames);
-	const genres = useSelector((state) => state.genres);
-	
+	const [test, setTest] = useState(null);
+
+	let videogames = useSelector((state) => state.videogames);
+	const orden = useSelector((state) => state.orden);
+	const genFilter = useSelector((state) => state.genFilter);
+	const busqueda = useSelector((state) => state.buscarNombre);
+
+	if (busqueda && busqueda !== "x_X") {
+		videogames = videogames.filter((v) =>
+			v.name.toLowerCase().includes(busqueda.toLowerCase())
+		);
+	}
+
+	if (videogames.length === 0) {
+		if (busqueda && busqueda !== "x_X") {
+			if (!test) {
+				axios
+					.get(
+						`http://localhost:3001/videogames/${busqueda.replaceAll(" ", "-")}`
+					)
+					.then((res) => {
+						const videogame = {
+							id: res.data.id,
+							name: res.data.name,
+							background_image: res.data.background_image,
+							genres: res.data.genres,
+						};
+
+						setTest([videogame]);
+					})
+					.catch((err) => {
+						showServerMessage("Home get = " + err.message, "error");
+					});
+				// } else {
+			}
+		}
+	}
+	if (test && busqueda !== "x_X") {
+		videogames = test;
+	}
+
+	// Ordenado
+	if (orden === "asc") {
+		videogames.sort((a, b) => {
+			if (a.name > b.name) return 1;
+			if (a.name < b.name) return -1;
+			return 0;
+		});
+	} else if (orden === "desc") {
+		videogames.sort((a, b) => {
+			if (a.name > b.name) return -1;
+			if (a.name < b.name) return 1;
+			return 0;
+		});
+	}
+
+	// Filtrado
+	if (genFilter !== "all" && genFilter !== "GENERO" && genFilter !== "") {
+		videogames = videogames.filter((v) => {
+			for (let i = 0; i < v.genres.length; i++) {
+				if (v.genres[i].id === parseInt(genFilter)) {
+					return true;
+				}
+			}
+			return false;
+		});
+	}
+
 
 	// Paginado
 	const indexOfLastVideogame = currentPage * videogamesPerPage;
@@ -38,21 +97,25 @@ function Home() {
 	);
 	const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+
+	useMemo(() => {
+		pagenumber && paginate(pagenumber);
+	}, [pagenumber]);
+
 	return (
 		<div className={styles.container}>
-			<Navbar
-				genres={genres}
-				setLoading={setLoading}
-			/>
+			<Navbar setLoading={setLoading} />
 			<Cards
 				videogames={currentVideogames}
 				loading={loading}
+				currentPage={currentPage}
 			/>
 			<Footer
 				videogamesPerPage={videogamesPerPage}
 				totalVideogames={videogames.length}
 				paginate={paginate}
 				currentPage={currentPage}
+				svpp={setVideogamesPerPage}
 			/>
 		</div>
 	);

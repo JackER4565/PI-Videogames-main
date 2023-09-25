@@ -10,26 +10,33 @@ const { API_KEY } = process.env;
 
 const searchVideogames = async (req, res) => {
 	try {
-		const { idVideogame } = req.params;
+		let idVideogame;
+		if (req.params.idVideogame === "s") idVideogame = req.query.name;
+		else idVideogame = req.params.idVideogame;
+		// ejemplo: path-of-exile
+
 		let videogameDb;
-		if (isNaN(parseInt(idVideogame, 10))) {
+		// primero lo busco en la db
+		if (typeof idVideogame === "string") {
+			console.log("strign");
 			videogameDb = await Videogame.findOne({
 				where: {
 					name: idVideogame,
 				},
 			});
-		} 
-		// else {
-		// 	videogameDb = await Videogame.findOne({
-		// 		where: {
-		// 			id: parseInt(idVideogame, 10),
-		// 		},
-		// 	});
-		// }
+		} else if (typeof idVideogame === "number") {
+			console.log("number");
+			videogameDb = await Videogame.findOne({
+				where: {
+					id: idVideogame,
+				},
+			});
+		}
 		// si videogameDb no es null lo encontró en la db
 		if (videogameDb) {
 			return res.status(200).json(videogameDb);
 		} else {
+			console.log("no lo encontró en la db");
 			// si videogameDb es null lo busca en la api
 			let videogameApi = await axios.get(
 				`https://api.rawg.io/api/games/${idVideogame}?key=${API_KEY}`
@@ -37,16 +44,16 @@ const searchVideogames = async (req, res) => {
 			if (videogameApi.data) {
 				return res.status(200).json(videogameApi.data);
 			} else {
-				return res
-					.status(404)
-					.json({
-						message: "No se encontró el videojuego en la DB ni en la API.",
-					});
+				return res.status(404).json({
+					message: "No se encontró el videojuego en la DB ni en la API.",
+				});
 			}
 		}
 	} catch (error) {
-		console.log(error);
-		return res.status(500).json({ message: "Error interno del servidor", error: error.message });
+		// console.log(error);
+		return res
+			.status(500)
+			.json({ message: "Error interno del servidor", error: error.message });
 	}
 };
 

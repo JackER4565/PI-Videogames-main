@@ -1,9 +1,9 @@
 // ../NAVBAR/navbar.jsx
 import { useDispatch } from "react-redux";
-import { videogames, genres } from "../../Redux/Actions";
+import { videogames, genres as getGenres  } from "../../Redux/Actions";
 
 import styles from "./Getters.module.css";
-import axios from "axios";
+import { showServerMessage } from "../../server-messages";
 
 function Getters({ setLoading }) {
 	const dispatch = useDispatch();
@@ -11,29 +11,19 @@ function Getters({ setLoading }) {
 		setLoading(true);
 		try {
 			await dispatch(videogames());
+			await dispatch(getGenres());
 		} catch (err) {
-			console.log(err);
+			showServerMessage("Getter dispatchs = " + err.message, "error")
 		} finally {
 			setLoading(false);
 		}
 	};
 
-	const getGenres = () => {
-		axios
-			.get("http://localhost:3001/genres")
-			.then(() => {
-				dispatch(genres());
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
 	// Llamo al backend para obtener los videojuegos en el store cuando carga la página
 
 	return (
 		<div className={styles.container}>
 			<button onClick={getVideogames}>Get Videogames</button>
-			<button onClick={getGenres}>Get Genres</button>
 		</div>
 	);
 }

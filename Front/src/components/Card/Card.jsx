@@ -3,7 +3,7 @@ import styles from "./Card.module.css";
 
 import { Link } from "react-router-dom";
 
-export default function Card({ id, name, image, genre }) {
+export default function Card({ id, name, image, genre, currentPage }) {
 	// const dispatch = useDispatch();
 	// const myFavorites = useSelector((state) => state.myFavorites);
 	// const [isFavorite, setIsFavorite] = useState(false);
@@ -37,8 +37,8 @@ export default function Card({ id, name, image, genre }) {
 	// };
 
 	return (
-		<div className={styles.container}>
-			<Link to={`/detail/${id}`}>
+		<Link to={`/detail/${id}&${currentPage}`}>
+			<div className={styles.container}>
 				<div className={styles.text}>
 					<h2>{name}</h2>
 				</div>
@@ -48,7 +48,7 @@ export default function Card({ id, name, image, genre }) {
 					alt=""
 				/>
 				<h2>{genre}</h2>
-			</Link>
-		</div>
+			</div>
+		</Link>
 	);
 }

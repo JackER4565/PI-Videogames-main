@@ -1,8 +1,8 @@
 .container{
-    /* display: flex;
+     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; */
+    align-items: center; 
     width: 100%;
     /* border-radius: 10px; */
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -13,6 +13,7 @@
     position: fixed;
     bottom: 0px;
     background: #242424;
+    gap:5px;
 }
 
 .pagination{
@@ -37,6 +38,10 @@
 .pageItem:hover{
     background: #aaaaaa;
     color: #0400ff;
+}
+
+.pageItem:hover .pageLink{
+    color: black;
 }
 
 .pageItemActive{
@@ -75,3 +80,11 @@
 }
 
 
+
+.select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+    order: -1; /* add this line to move the element to the left */
+}
