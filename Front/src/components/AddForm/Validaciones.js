@@ -1,39 +1,3 @@
-//     name: {
-//         type: DataTypes.STRING,
-//         allowNull: false,
-//     },
-//     description: {
-//         type: DataTypes.TEXT,
-//         allowNull: false,
-//     },
-//     plataform: {
-//         type: DataTypes.STRING,
-//         allowNull: false,
-//     },
-//     image: {
-//         type: DataTypes.STRING,
-//         allowNull: false,
-//     },
-//     releaseDate: {
-//         type: DataTypes.DATE,
-//         allowNull: false,
-//     },
-//     rating: {
-//         type: DataTypes.INTEGER,
-//         allowNull: false,
-//     },
-// },
-// {
-// 	name,
-// 	background_image,
-// 	rating,
-// 	released,
-// 	genres,
-// 	platforms,
-// 	description_raw,
-// }
-
-// [IMPORANTE]: es requisito que el formulario de creación esté validado sólo con JavaScript. Puedes agregar las validaciones que consideres. Por ejemplo: que el nombre del videojuego no pueda contener símbolos, o que el rating no pueda exceder determinado valor, etc.
 
 const validacion = (data) => {
     let errores = [];

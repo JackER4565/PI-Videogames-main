@@ -10,20 +10,19 @@
 }
 
 .pressStart{
-    font-family: 'Press Start 2P', cursive;
-    font-size: 24px;
-    color: #fff;
-    margin-bottom: 32px;
-    animation: fadeIn 1s infinite;
-    transition: all 0.1s;
+    animation: fadeIn 1.25s infinite alternate linear;
+    /* transition: all 0.1s; */
 }
 
 @keyframes fadeIn {
-    from {
+    0% {
         opacity: 0;
     }
-    to{
+    50% {
         opacity: 1;
+    }
+    100%{
+        opacity: 0;
     }
     
 }

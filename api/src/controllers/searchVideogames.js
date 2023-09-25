@@ -4,35 +4,50 @@
 // Tiene que incluir los datos del género del videojuego al que está asociado.
 // Debe funcionar tanto para los videojuegos de la API como para los de la base de datos.
 
-const { Videogame, Genre } = require("../db.js");
+const { Videogame, Genre, Platform } = require("../db.js");
 const axios = require("axios");
 const { API_KEY } = process.env;
+const { Op } = require("sequelize");
 
 const searchVideogames = async (req, res) => {
 	try {
 		let idVideogame;
 		if (req.params.idVideogame === "s") idVideogame = req.query.name;
 		else idVideogame = req.params.idVideogame;
-		// ejemplo: path-of-exile
 
-		let videogameDb;
+		// ejemplo: path-of-exile
+		console.log("idVideogame", typeof idVideogame);
 		// primero lo busco en la db
-		if (typeof idVideogame === "string") {
-			console.log("strign");
-			videogameDb = await Videogame.findOne({
-				where: {
-					name: idVideogame,
+
+		// const videogameDb = await Videogame.findOne({
+		// 	where: {
+		// 		[Op.or]: [{ name: idVideogame }, { id: idVideogame }],
+		// 	},
+		// });
+
+		const videogameDb = await Videogame.findOne({
+			where: {
+				[Op.or]: [{ name: idVideogame }, { id: idVideogame }],
+				// id: idVideogame,
+			},
+			include: {
+				model: Genre,
+				attributes: ["name"],
+				through: {
+					attributes: [],
 				},
-			});
-		} else if (typeof idVideogame === "number") {
-			console.log("number");
-			videogameDb = await Videogame.findOne({
-				where: {
-					id: idVideogame,
+				model: Platform,
+				attributes: ["name"],
+				through: {
+					attributes: [],
 				},
-			});
-		}
-		// si videogameDb no es null lo encontró en la db
+			},
+		});
+
+		console.log(
+			"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		);
+		console.log("videogameDb", videogameDb);
 		if (videogameDb) {
 			return res.status(200).json(videogameDb);
 		} else {
@@ -41,6 +56,7 @@ const searchVideogames = async (req, res) => {
 			let videogameApi = await axios.get(
 				`https://api.rawg.io/api/games/${idVideogame}?key=${API_KEY}`
 			);
+			console.log("videogameApi", videogameApi.data);
 			if (videogameApi.data) {
 				return res.status(200).json(videogameApi.data);
 			} else {

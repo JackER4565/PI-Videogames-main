@@ -29,7 +29,7 @@ function Filters() {
         <option value="asc">Asc</option>
         <option value="desc">Desc</option>
     </select>
-    <select onChange={handleGenChange()}>
+    <select className={style.select} onChange={handleGenChange()}>
         <option value="">GENERO</option>
         <option value="all">All</option>
         {generos.map((g) => (

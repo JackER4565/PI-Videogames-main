@@ -4,9 +4,14 @@ import Footer from "../Footer/Footer.jsx";
 import styles from "./Home.module.css";
 
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useMemo } from "react";
+import { useDispatch } from "react-redux";
+import {
+	videogames as getVideogames,
+	genres as getGenres,
+} from "../../Redux/Actions";
 
 import axios from "axios";
 
@@ -26,6 +31,23 @@ function Home() {
 	const genFilter = useSelector((state) => state.genFilter);
 	const busqueda = useSelector((state) => state.buscarNombre);
 
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const run = async () => {
+			setLoading(true);
+			try {
+				await dispatch(getVideogames());
+				await dispatch(getGenres());
+			} catch (err) {
+				showServerMessage("Getter dispatchs = " + err.message, "error");
+			} finally {
+				setLoading(false);
+			}
+		};
+		run();
+	}, [dispatch]);
+
 	if (busqueda && busqueda !== "x_X") {
 		videogames = videogames.filter((v) =>
 			v.name.toLowerCase().includes(busqueda.toLowerCase())
@@ -35,6 +57,7 @@ function Home() {
 	if (videogames.length === 0) {
 		if (busqueda && busqueda !== "x_X") {
 			if (!test) {
+				// TODO poner loading 
 				axios
 					.get(
 						`http://localhost:3001/videogames/${busqueda.replaceAll(" ", "-")}`
@@ -48,11 +71,12 @@ function Home() {
 						};
 
 						setTest([videogame]);
+						
 					})
 					.catch((err) => {
 						showServerMessage("Home get = " + err.message, "error");
 					});
-				// } else {
+
 			}
 		}
 	}
@@ -87,7 +111,6 @@ function Home() {
 		});
 	}
 
-
 	// Paginado
 	const indexOfLastVideogame = currentPage * videogamesPerPage;
 	const indexOfFirstVideogame = indexOfLastVideogame - videogamesPerPage;
@@ -96,7 +119,6 @@ function Home() {
 		indexOfLastVideogame
 	);
 	const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
 
 	useMemo(() => {
 		pagenumber && paginate(pagenumber);

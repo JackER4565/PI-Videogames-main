@@ -37,7 +37,7 @@ function Footer({ videogamesPerPage, totalVideogames, paginate, currentPage, svp
 				<select
 					name="videogamesPerPage"
 					id="videogamesPerPage"
-					onChange={(e) => svpp(e.target.value)}>
+					onChange={(e) => {svpp(e.target.value);paginate(1);}}>
 					<option value="5">5</option>
 					<option value="10">10</option>
 					<option value="15">15</option>

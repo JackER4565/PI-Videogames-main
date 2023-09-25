@@ -3,12 +3,11 @@ import validacion from "./Validaciones";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./AddForm.module.css";
 import { postVideogames } from "../../Redux/Actions";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { showServerMessage } from "../../server-messages";
 
 function AddForm() {
 	const dispatch = useDispatch();
-
 
 	const genres = useSelector((state) => state.genres);
 
@@ -27,16 +26,24 @@ function AddForm() {
 		setError(validacion(Data));
 	}, [Data]);
 
-
-
-
 	async function onSubmit(e) {
 		e.preventDefault();
 		const error = validacion(Data);
 		setError(error);
 		if (!error.length > 0) {
 			const res = await dispatch(postVideogames(Data));
-			if (res) showServerMessage("Submit OK = " + res, "success");
+			if (res) {
+				showServerMessage("Submit OK = " + res.message, "success");
+				setData({
+					name: "",
+					background_image: "",
+					rating: "",
+					released: "",
+					genres: [],
+					platforms: "",
+					description_raw: "",
+				});
+			}
 		} else {
 			showServerMessage("Error al enviar el formulario", "error");
 		}
@@ -59,7 +66,14 @@ function AddForm() {
 		if (e.target.name === "name") {
 			setData({
 				...Data,
-				name: e.target.value.charAt(0).toUpperCase()  + e.target.value.slice(1),
+				name: e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1),
+			});
+			return;
+		}
+		if (e.target.name === "platforms") {
+			setData({
+				...Data,
+				platforms: [e.target.value],
 			});
 			return;
 		}
@@ -73,7 +87,11 @@ function AddForm() {
 
 	return (
 		<div className={style.container}>
-			<Link className={style.link} to={`/home/`}>Volver</Link>
+			<Link
+				className={style.link}
+				to={`/home/`}>
+				Volver
+			</Link>
 			<h1 className={style.titulo}>Agregando videojuego a la DB:</h1>
 			<div className={style.outerContainer}>
 				<form
@@ -89,6 +107,7 @@ function AddForm() {
 						autoComplete="off"
 						placeholder="Nombre"
 					/>
+					{/* {Data.name === "" && <span className={style.error}>Campo obligatorio</span>} */}
 					<label htmlFor="description_raw">Descripción:</label>
 					<input
 						type="text"
@@ -134,24 +153,6 @@ function AddForm() {
 						onChange={handleChange}
 						placeholder="0-5"
 					/>
-					{/* <h3>Géneros:</h3> */}
-					{/* <div className={style.inputGeneros}> */}
-					{/* {genres &&
-					genres.map((genre) => {
-						return (
-							<div key={genre.id}>
-								<input
-									className={style.checkbox}
-									type="checkbox"
-									id={genre.id}
-									name="genres"
-									value={genre.name}
-									onChange={handleChange}
-								/>
-								<label htmlFor={genre.id}>{genre.name}</label>
-							</div>
-						);
-					})} */}
 					<label htmlFor="genres">Géneros:</label>
 
 					<select
@@ -180,22 +181,21 @@ function AddForm() {
 						className={style.submit}>
 						Agregar
 					</button>
-
 				</form>
 				<div className={style.errorBox}>
-					{error.length > 0 && seteado  ? (
-						error.map((err) => {
-							return (
-								<h3
-									className={style.label}
-									key={err}>
-									{err}
-								</h3>
-							);
+					{error.length > 0 && seteado
+						? error.map((err) => {
+								return (
+									<h3
+										className={style.label}
+										key={err}>
+										{err}
+									</h3>
+								);
 						})
-					) : !seteado &&  (
-						<h3 className={style.label}>Completar todos los campos.</h3>
-					)}
+						: !seteado && (
+								<h3 className={style.label}>Completar todos los campos.</h3>
+						)}
 				</div>
 			</div>
 		</div>

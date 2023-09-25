@@ -4,37 +4,23 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
 	// defino el modelo
 	sequelize.define(
-		"videogame",
+		"platform",
 		{
 			id: {
 				type: DataTypes.INTEGER,
-				autoIncrement: true,
 				primaryKey: true,
 			},
 			name: {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
-			description_raw: {
-				type: DataTypes.TEXT,
-				allowNull: false,
-			},
-			background_image: {
-				type: DataTypes.STRING,
-				allowNull: false,
-			},
-			released: {
-				type: DataTypes.DATE,
-				allowNull: false,
-			},
-			rating: {
-				type: DataTypes.INTEGER,
-				allowNull: false,
-			},
 		},
-		{ timestamps: false }
+		{
+			timestamps: false,
+		}
 	);
 };
+
 // MODELO 1 | Videogames
 
 // ID (deben ser distintos a los que vienen de la API). *

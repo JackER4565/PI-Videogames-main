@@ -2,3 +2,14 @@
     display: grid;
     gap: 15px;
 }
+
+.select {
+    width: 150px;
+    max-width: 150px;
+}
+
+.select option {
+    width: 100px;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}

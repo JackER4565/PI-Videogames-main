@@ -21,18 +21,22 @@
   border: 1px solid transparent;
   border-radius: 4px;
   display: none;
+  z-index: 10000000000;
 }
 
 .alert-success {
   color: #155724;
   background-color: #d4edda;
   border-color: #c3e6cb;
+  z-index: 10000000000;
 }
 
 .alert-error {
+  position: absolute;
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
+  z-index: 10000000000;
 }
 
 .close {

@@ -1,6 +1,6 @@
 import styles from "./Detail.module.css";
 import { useState, useEffect } from "react";
-import { useParams, Link} from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { showServerMessage } from "../../server-messages";
 function Detail() {
@@ -10,13 +10,14 @@ function Detail() {
 
 	const id = param.split("&")[0];
 	const pagenumber = param.split("&")[1];
-	
+
 	useEffect(() => {
 		setLoading(true);
 		const endpoint = `http://localhost:3001/videogames/${id}`;
 		axios
 			.get(endpoint)
 			.then((data) => {
+				console.log("detail ", data.data);
 				if (data.data) {
 					setVideogame(data.data);
 				} else {
@@ -25,7 +26,8 @@ function Detail() {
 			})
 			.catch((error) => {
 				showServerMessage("Detail get = " + error.message, "error");
-			}).finally(() => {
+			})
+			.finally(() => {
 				setLoading(false);
 			});
 	}, [id]);
@@ -35,7 +37,11 @@ function Detail() {
 	}
 	return (
 		<div>
-			<Link className={styles.link} to={`/home/${pagenumber}`}>Volver</Link>
+			<Link
+				className={styles.link}
+				to={`/home/${pagenumber}`}>
+				Volver
+			</Link>
 			<div className={styles.container}>
 				<div className={styles.card}>
 					<h1>{videogame.name}</h1>
@@ -52,10 +58,9 @@ function Detail() {
 					</p>
 					<p>
 						Platforms:{" "}
-						{videogame.platforms &&
-							videogame.platforms
-								.map((platform) => platform.platform.name)
-								.join(", ")}
+						{videogame.platform &&
+							videogame.platform
+								.map((platform) => platform.name).join(", ")}
 					</p>
 					<p>Description: {videogame.description_raw}</p>
 				</div>

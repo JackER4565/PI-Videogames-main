@@ -4,6 +4,7 @@
 // Debe crear un videojuego en la base de datos, y este debe estar relacionado con sus géneros indicados (al menos uno).
 const Videogame = require("../db.js").Videogame;
 const Genre = require("../db.js").Genre;
+const Platform = require("../db.js").Platform;
 const { Op } = require("sequelize");
 
 const postVideogames = async (req, res) => {
@@ -17,13 +18,13 @@ const postVideogames = async (req, res) => {
 			genres,
 			background_image,
 		} = req.body;
+
 		const videogame = await Videogame.findOrCreate({
 			where: {
 				name,
 				description_raw,
 				released,
 				rating,
-				platforms,
 				background_image,
 			},
 		});
@@ -35,7 +36,14 @@ const postVideogames = async (req, res) => {
 				},
 			},
 		});
-
+		const platformDb = await Platform.findAll({
+			where: {
+				name: {
+					[Op.in]: platforms,
+				},
+			},
+		});
+		await videogame[0].addPlatforms(platformDb);
 		await videogame[0].addGenres(genresDb);
 		return res
 			.status(200)
