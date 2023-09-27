@@ -1,65 +1,61 @@
 .container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
+    padding-right: 25px;
     width: 50vw;
-    margin-bottom: 20px;
+    height: 170px;
     border-radius: 10px;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
-    padding: 20px;
     box-sizing: border-box;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     position: relative;
     top: 50px;
+    z-index: 1;
 }
 
 .container:hover {
-    transform: scale(1.05);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     z-index: 500;
+    transition: all 0.3s ease-in-out;
+
+    .image {
+        height: 400px;
+        top: -90px;
+    }
 }
 
-/* .container img {
-    /* width: 20vw; */
-/* height: 200px; 
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: scale-down;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    transition: all 0.3s ease-in-out;
-} */
 .container img {
-    height: auto;
+    height: 150px;
     left: 0;
     margin: 0;
     min-height: 100%;
     min-width: 674px;
     padding: 0;
+    object-fit: cover;
+    object-position: top;
     position: absolute;
     top: 0;
     width: 100%;
     z-index: -1;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
+    transition: all 0.3s ease-in-out;
 }
 
 .text {
+    position: absolute;
     font-size: 2rem;
-    font-weight: bold;
     text-align: center;
-    /* font-family: 'Courier New', Courier, monospace; */
-    transition: all 0.3s ease-in-out;
-    color: #808080;
-    text-shadow: 2px 2px #000000;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #000000;
+    left: 15px;
+    top: 15px;
+    background-color: rgba(211, 211, 211, 0.65);
+    padding: 5px 10px;
 
 }
-/* 
-.text:hover {
-    transform: translateY(+200%);
-} */
 
 .Card {
     display: flex;
@@ -80,26 +76,24 @@
 
 
 .genre {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     display: flex;
     flex-direction: column;
-    position: absolute;
-    top: 35px;
-    right: 20px;
+    align-items: flex-end;
+    justify-content: center;
+    right: 0px;
 }
 
 .genre span {
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 5px;
+    padding: 0px 5px 5px;
+    width: 120px;
+    max-width: 120px;
 }
 
 .Adventure {
     background-color: #000000;
     color: #FFFFFF;
-    /* border-radius: 10px; */
-    
 }
 
 .Indie {
@@ -155,6 +149,7 @@
 .Massively_Multiplayer {
     background-color: #E91E63;
     color: #FFFFFF;
+
 }
 
 .Racing {
