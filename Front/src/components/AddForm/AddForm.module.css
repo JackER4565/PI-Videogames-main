@@ -2,25 +2,68 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  margin: -50px;
-  padding: 0px;
-  /* width: 100vw; */
+  justify-content: flex-start;
+  width: 100vw;
+  height: auto;
+  gap: 20px;
+  border: 1px solid red;
 }
 
+.titulo {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 0px;
+}
+
+.outerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  gap: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  gap:20px;
+}
+
+.formContainer {
+  position: relative;
+  display: flex;
+  gap: 30px;
+}
 .select__genres {
   overflow: hidden;
 }
 .select__platforms {
   overflow-y: scroll;
 }
+
+.container__inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+
 .container__genero {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  position: absolute;
-  left: 400px;
+  position: relative;
 }
 
 .container__plataformas {
@@ -28,26 +71,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  position: absolute;
-  left: 210px;
-}
-
-.outerContainer {
-  display: flex;
-  /* gap: 50px; */
-  position: absolute;
-  top: 180px;
-
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
-  justify-content: space-between;
   position: relative;
-  left: -300px;
-  gap:2px;
+}
+
+.container__buttons {
+  display: flex;
+  gap: 10px;
 }
 
 .errorBox {
@@ -55,9 +84,9 @@
   flex-direction: column;
   align-items: center;
   color: rgba(248, 7, 7, 0.6);
-  position: absolute;
-  left: 400px;
+  position: relative;
   min-width: max-content;
+  height: 300px;
 }
 
 
@@ -68,69 +97,32 @@
 }
 
 .form select {
-  height: 100%;
   margin-bottom: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-.titulo {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  overflow: hidden;
-  top: 50px;
-  line-height: 1.5;
-  position: absolute;
-  margin-top: 0px;
-  
-}
+
 .form input {
-  /* margin-bottom: 10px; */
   padding: 10px;
-  border: 1px solid #ccc;
   border-radius: 5px;
   overflow: hidden;
 }
 
 .submit {
-  margin-top: 20px;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc;
-  /* background-color: #fff; */
-  /* color: #1e90ff; */
   cursor: pointer;
 }
 
 .submit.hover {
   background-color: #fff;
   color: #1e90ff;
-  border: 1px solid #1e90ff;
   cursor: pointer;
 }
 
 .submit.active {
   background-color: #1e90ff;
   color: #fff;
-  border: 1px solid #1e90ff;
   cursor: pointer;
-}
-/* 
-.link {
-  position: absolute;
-  left: 50px;
-  top: 50px;
-  text-decoration: none;
-  color: #1e90ff;
-  font-weight: bold;
-} */
-
-.botones {
-  display: flex;
-  gap: 10px;
 }

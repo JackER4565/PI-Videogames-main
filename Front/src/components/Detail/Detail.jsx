@@ -36,7 +36,7 @@ function Detail() {
 		return <h1>Loading...</h1>;
 	}
 	return (
-		<div>
+		<>
 			{console.log(videogame)}
 			<Link
 				className={styles.link}
@@ -66,7 +66,7 @@ function Detail() {
 					<p>Description: {videogame.description_raw}</p>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 

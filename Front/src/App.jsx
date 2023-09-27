@@ -18,7 +18,7 @@ function App() {
 	};
 
 	return (
-		<div>
+		<>
 			<div
 				style={{ display: showButton ? "none" : "block" }}
 				id="serverMessage"
@@ -55,7 +55,7 @@ function App() {
 					element={<AddForm />}
 				/>
 			</Routes>
-		</div>
+		</>
 	);
 }
 

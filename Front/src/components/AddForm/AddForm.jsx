@@ -121,6 +121,8 @@ function AddForm() {
 				<form
 					className={style.form}
 					onSubmit={onSubmit}>
+					<div className={style.formContainer}>
+						<div className={style.container__inputs}>
 					<label htmlFor="name">Nombre:</label>
 					<input
 						type="text"
@@ -168,7 +170,8 @@ function AddForm() {
 						onChange={handleChange}
 						placeholder="0-5"
 					/>
-					<div className={style.container__plataformas}>
+						</div>
+						<div className={style.container__plataformas}>
 						<label htmlFor="platforms">Plataformas:</label>
 
 						<select
@@ -192,8 +195,8 @@ function AddForm() {
 								<option>Cargando...</option>
 							)}
 						</select>
-					</div>
-					<div className={style.container__genero}>
+						</div>
+						<div className={style.container__genero}>
 						<label htmlFor="genres">Géneros:</label>
 
 						<select
@@ -217,8 +220,9 @@ function AddForm() {
 								<option>Cargando...</option>
 							)}
 						</select>
+						</div>
 					</div>
-					<div className={style.botones}>
+					<div className={style.container__buttons}>
 						<button
 							type="submit"
 							className={style.submit}>
@@ -232,21 +236,21 @@ function AddForm() {
 					</div>
 				</form>
 
-				<div className={style.errorBox}>
+			<div className={style.errorBox}>
 					{error.length > 0 && seteado
 						? error.map((err) => {
-								return (
-									<h3
-										className={style.label}
-										key={err}>
-										{err}
-									</h3>
-								);
+							return (
+								<h3
+									className={style.label}
+									key={err}>
+									{err}
+								</h3>
+							);
 						})
 						: !seteado && (
-								<h3 className={style.label}>Completar todos los campos.</h3>
+							<h3 className={style.label}>Completar todos los campos.</h3>
 						)}
-				</div>
+			</div>
 			</div>
 		</div>
 	);

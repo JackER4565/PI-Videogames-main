@@ -7,7 +7,7 @@ export default function Cards({ videogames, loading, currentPage }) {
 	const busqueda = useSelector((state) => state.buscarNombre);
 
 	if (loading) {
-		return <h2>Loading...</h2>;
+		return <h2 className={styles.container}>Loading...</h2>;
 	}
 
 	
