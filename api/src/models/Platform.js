@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
 		{
 			id: {
 				type: DataTypes.INTEGER,
+				autoIncrement: true,
 				primaryKey: true,
 			},
 			name: {
@@ -20,18 +21,3 @@ module.exports = (sequelize) => {
 		}
 	);
 };
-
-// MODELO 1 | Videogames
-
-// ID (deben ser distintos a los que vienen de la API). *
-// Nombre. *
-// Descripción. *
-// Plataformas. *
-// Imagen. *
-// Fecha de lanzamiento. *
-// Rating. *
-
-// 📍 MODELO 2 | Genres
-
-// ID. *
-// Nombre. *

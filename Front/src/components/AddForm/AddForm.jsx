@@ -5,11 +5,16 @@ import style from "./AddForm.module.css";
 import { postVideogames } from "../../Redux/Actions";
 import { Link } from "react-router-dom";
 import { showServerMessage } from "../../server-messages";
+import {
+	genres as getGenres,
+	platforms as getPlatforms,
+} from "../../Redux/Actions";
 
 function AddForm() {
 	const dispatch = useDispatch();
 
 	const genres = useSelector((state) => state.genres);
+	const platforms = useSelector((state) => state.platforms);
 
 	const [Data, setData] = useState({
 		name: "",
@@ -17,10 +22,22 @@ function AddForm() {
 		rating: "",
 		released: "",
 		genres: [],
-		platforms: "",
+		platforms: [],
 		description_raw: "",
 	});
 	const [error, setError] = useState([]);
+
+	useEffect(() => {
+		const run = async () => {
+			try {
+				dispatch(getGenres());
+				dispatch(getPlatforms());
+			} catch (err) {
+				showServerMessage("Getter dispatchs = " + err.message, "error");
+			}
+		};
+		run();
+	}, [dispatch]);
 
 	useEffect(() => {
 		setError(validacion(Data));
@@ -31,6 +48,10 @@ function AddForm() {
 		const error = validacion(Data);
 		setError(error);
 		if (!error.length > 0) {
+			setData({
+				...Data,
+				platforms: Data.platforms.map((platform) => platform.trim()),
+			});
 			const res = await dispatch(postVideogames(Data));
 			if (res) {
 				showServerMessage("Submit OK = " + res.message, "success");
@@ -40,9 +61,11 @@ function AddForm() {
 					rating: "",
 					released: "",
 					genres: [],
-					platforms: "",
+					platforms: [],
 					description_raw: "",
 				});
+				document.querySelector("#genres").value = "";
+				document.querySelector("#platforms").value = "";
 			}
 		} else {
 			showServerMessage("Error al enviar el formulario", "error");
@@ -54,13 +77,18 @@ function AddForm() {
 			const error = validacion(Data);
 			setError(error);
 		}
-
 		if (e.target.name === "genres") {
 			setData({
 				...Data,
 				genres: Array.from(e.target.selectedOptions, (item) => item.value),
 			});
-
+			return;
+		}
+		if (e.target.name === "platforms") {
+			setData({
+				...Data,
+				platforms: Array.from(e.target.selectedOptions, (item) => item.value),
+			});
 			return;
 		}
 		if (e.target.name === "name") {
@@ -70,10 +98,11 @@ function AddForm() {
 			});
 			return;
 		}
+
 		if (e.target.name === "platforms") {
 			setData({
 				...Data,
-				platforms: [e.target.value],
+				platforms: e.target.value.split(","),
 			});
 			return;
 		}
@@ -87,11 +116,6 @@ function AddForm() {
 
 	return (
 		<div className={style.container}>
-			<Link
-				className={style.link}
-				to={`/home/`}>
-				Volver
-			</Link>
 			<h1 className={style.titulo}>Agregando videojuego a la DB:</h1>
 			<div className={style.outerContainer}>
 				<form
@@ -116,15 +140,6 @@ function AddForm() {
 						value={Data.description_raw}
 						onChange={handleChange}
 						placeholder="Descripción"
-					/>
-					<label htmlFor="platforms">Plataformas:</label>
-					<input
-						type="text"
-						id="platforms"
-						name="platforms"
-						value={Data.platforms}
-						onChange={handleChange}
-						placeholder="PC, PS4, etc."
 					/>
 					<label htmlFor="background_image">Imagen:</label>
 					<input
@@ -153,35 +168,70 @@ function AddForm() {
 						onChange={handleChange}
 						placeholder="0-5"
 					/>
-					<label htmlFor="genres">Géneros:</label>
+					<div className={style.container__plataformas}>
+						<label htmlFor="platforms">Plataformas:</label>
 
-					<select
-						name="genres"
-						id="genres"
-						multiple
-						size={genres.length - 4}
-						onChange={handleChange}>
-						{genres.length != 0 ? (
-							genres.map((genre) => {
-								return (
-									<option
-										value={genre.name}
-										key={genre.id}>
-										{genre.name}
-									</option>
-								);
-							})
-						) : (
-							<option>Cargando...</option>
-						)}
-					</select>
+						<select
+							name="platforms"
+							id="platforms"
+							multiple
+							size={genres.length}
+							onChange={handleChange}
+							className={style.select__platforms}>
+							{platforms.length != 0 ? (
+								platforms.map((platforms) => {
+									return (
+										<option
+											value={platforms.name}
+											key={platforms.id}>
+											{platforms.name}
+										</option>
+									);
+								})
+							) : (
+								<option>Cargando...</option>
+							)}
+						</select>
+					</div>
+					<div className={style.container__genero}>
+						<label htmlFor="genres">Géneros:</label>
 
-					<button
-						type="submit"
-						className={style.submit}>
-						Agregar
-					</button>
+						<select
+							name="genres"
+							id="genres"
+							multiple
+							size={genres.length}
+							onChange={handleChange}
+							className={style.select__genres}>
+							{genres.length != 0 ? (
+								genres.map((genre) => {
+									return (
+										<option
+											value={genre.name}
+											key={genre.id}>
+											{genre.name}
+										</option>
+									);
+								})
+							) : (
+								<option>Cargando...</option>
+							)}
+						</select>
+					</div>
+					<div className={style.botones}>
+						<button
+							type="submit"
+							className={style.submit}>
+							Agregar
+						</button>
+						<Link
+							className={style.link}
+							to={`/home/`}>
+							<button className={style.submit}>Volver</button>
+						</Link>
+					</div>
 				</form>
+
 				<div className={style.errorBox}>
 					{error.length > 0 && seteado
 						? error.map((err) => {

@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import {
 	videogames as getVideogames,
 	genres as getGenres,
+	platforms as getPlatforms,
 } from "../../Redux/Actions";
 
 import axios from "axios";
@@ -39,6 +40,7 @@ function Home() {
 			try {
 				await dispatch(getVideogames());
 				await dispatch(getGenres());
+				await dispatch(getPlatforms());
 			} catch (err) {
 				showServerMessage("Getter dispatchs = " + err.message, "error");
 			} finally {
@@ -54,33 +56,35 @@ function Home() {
 		);
 	}
 
-	if (videogames.length === 0) {
+	// if (videogames.length === 0) {
 		if (busqueda && busqueda !== "x_X") {
 			if (!test) {
 				// TODO poner loading 
 				axios
 					.get(
-						`http://localhost:3001/videogames/${busqueda.replaceAll(" ", "-")}`
+						`http://localhost:3001/videogames?name=${busqueda.toLowerCase()}`
 					)
 					.then((res) => {
-						const videogame = {
-							id: res.data.id,
-							name: res.data.name,
-							background_image: res.data.background_image,
-							genres: res.data.genres,
-						};
+						console.log(res.data);
+						const newVideogames = res.data.map((game) => ({
+							id: game.id,
+							name: game.name,
+							background_image: game.background_image,
+							genres: game.genres,
+						}));
 
-						setTest([videogame]);
-						
+						setTest([...newVideogames]);
 					})
+
 					.catch((err) => {
 						showServerMessage("Home get = " + err.message, "error");
 					});
 
 			}
 		}
-	}
+	// }
 	if (test && busqueda !== "x_X") {
+		console.log(test)
 		videogames = test;
 	}
 

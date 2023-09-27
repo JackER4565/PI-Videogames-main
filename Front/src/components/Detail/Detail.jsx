@@ -37,6 +37,7 @@ function Detail() {
 	}
 	return (
 		<div>
+			{console.log(videogame)}
 			<Link
 				className={styles.link}
 				to={`/home/${pagenumber}`}>
@@ -58,8 +59,8 @@ function Detail() {
 					</p>
 					<p>
 						Platforms:{" "}
-						{videogame.platform &&
-							videogame.platform
+						{videogame.platforms &&
+							videogame.platforms
 								.map((platform) => platform.name).join(", ")}
 					</p>
 					<p>Description: {videogame.description_raw}</p>

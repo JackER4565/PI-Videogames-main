@@ -28,7 +28,7 @@ const postVideogames = async (req, res) => {
 				background_image,
 			},
 		});
-
+		console.log("genres", genres)
 		const genresDb = await Genre.findAll({
 			where: {
 				name: {
@@ -36,14 +36,16 @@ const postVideogames = async (req, res) => {
 				},
 			},
 		});
-		const platformDb = await Platform.findAll({
+		console.log("platforms", platforms)
+		const platformsDb = await Platform.findAll({
 			where: {
 				name: {
 					[Op.in]: platforms,
 				},
 			},
 		});
-		await videogame[0].addPlatforms(platformDb);
+		console.log("platformsDb", platformsDb)
+		await videogame[0].addPlatforms(platformsDb);
 		await videogame[0].addGenres(genresDb);
 		return res
 			.status(200)

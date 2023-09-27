@@ -8,15 +8,17 @@ const {videogames} = require('../controllers/videogames');
 const {searchVideogames} = require('../controllers/searchVideogames');
 const {postVideogames} = require('../controllers/postVideogames');
 const {genres} = require('../controllers/genres');
+const {platforms} = require('../controllers/platforms');
 
 // Rutas
 // DB
 router.get('/videogames', videogames);
+router.get('/platforms', platforms);
 router.post('/videogames', postVideogames);
 
 // DB y API
 router.get('/genres', genres);
 router.get('/videogames/:idVideogame', searchVideogames);
-router.get('/videogames/s', searchVideogames);
+
 
 module.exports = router;

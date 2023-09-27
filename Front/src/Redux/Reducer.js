@@ -1,9 +1,10 @@
-import { VIDEOGAMES, GENRES, ORDEN, BUSCARNAME, GENFILTER} from "./Actions.js";
+import { VIDEOGAMES, GENRES, PLATFORMS, ORDEN, BUSCARNAME, GENFILTER} from "./Actions.js";
 
 
 const initialState = {
 	videogames: [],
 	// videogamesName: [],
+	platforms: [],
 	genres: [],
 	orden: "",
 	buscarNombre: "",
@@ -12,6 +13,11 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case PLATFORMS:
+			return {
+				...state,
+				platforms: action.payload,
+			};
 		case GENFILTER:
 			return {
 				...state,

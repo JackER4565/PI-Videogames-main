@@ -1,5 +1,6 @@
 export const VIDEOGAMES = "VIDEOGAMES";
 export const GENRES = "GENRES";
+export const PLATFORMS = "PLATFORMS";
 export const ORDEN = "ORDEN";
 export const BUSCARNAME = "BUSCARNAME";
 export const GENFILTER = "GENFILTER";
@@ -8,6 +9,14 @@ import { showServerMessage } from "../server-messages.js";
 
 import axios from "axios";
 
+export const platforms = () => {
+	return (dispatch) => {
+		axios
+			.get("http://localhost:3001/platforms")
+			.then((res) => dispatch({ type: PLATFORMS, payload: res.data }))
+			.catch((err) => showServerMessage("Dispatch Platforms = " + err.message, "error"));
+	};
+};
 
 
 export const buscarVideogame = (input) => {

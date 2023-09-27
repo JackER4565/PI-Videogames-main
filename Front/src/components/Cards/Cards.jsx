@@ -20,7 +20,7 @@ export default function Cards({ videogames, loading, currentPage }) {
 					className={styles.pressStart}
 				/>
 				<h2>No se encontraron videojuegos... </h2>
-				{(busqueda && busqueda !== "x_X") ? <h3>Intenta borrar el filtro.</h3> : <h3>Intenta tocar el boton GET.</h3>}
+				{(busqueda && busqueda !== "x_X") ? <h3>Intenta borrar el filtro.</h3> : null}
 			</>
 		);
 	}
