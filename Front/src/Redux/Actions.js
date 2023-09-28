@@ -6,7 +6,7 @@ export const BUSCARNAME = "BUSCARNAME";
 export const GENFILTER = "GENFILTER";
 export const FINDER = "FINDER";
 
-import { showServerMessage } from "../server-messages.js";
+import { showServerMessage } from "../Utils/server-messages.js";
 
 import axios from "axios";
 

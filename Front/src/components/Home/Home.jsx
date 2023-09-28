@@ -16,7 +16,7 @@ import {
 
 import axios from "axios";
 
-import { showServerMessage } from "../../server-messages";
+import { showServerMessage } from "../../Utils/server-messages";
 
 function Home() {
 	const { pagenumber } = useParams();

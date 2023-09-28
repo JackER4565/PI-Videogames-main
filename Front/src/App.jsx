@@ -6,6 +6,9 @@ import Home from "./components/Home/Home";
 import Landing from "./components/Landing/Landing";
 import Detail from "./components/Detail/Detail";
 import AddForm from "./components/AddForm/AddForm";
+// import Edit from "./components/Edit/Edit";
+import Delete from "./components/Delete/Delete";
+
 import { useState } from "react";
 
 // import { useEffect } from "react";
@@ -53,6 +56,14 @@ function App() {
 				<Route
 					path="/add"
 					element={<AddForm />}
+				/>
+				{/* <Route
+					path="/edit/:id"
+					element={<Edit />}
+				/> */}
+				<Route
+					path="/delete/:id"
+					element={<Delete />}
 				/>
 			</Routes>
 		</>

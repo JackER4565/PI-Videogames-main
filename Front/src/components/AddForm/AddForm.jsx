@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import validacion from "./Validaciones";
+import validacion from "../../Utils/Validaciones";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./AddForm.module.css";
 import { postVideogames } from "../../Redux/Actions";
 import { Link } from "react-router-dom";
-import { showServerMessage } from "../../server-messages";
+import { showServerMessage } from "../../Utils/server-messages";
 import {
 	genres as getGenres,
 	platforms as getPlatforms,
@@ -53,6 +53,7 @@ function AddForm() {
 				platforms: Data.platforms.map((platform) => platform.trim()),
 			});
 			const res = await dispatch(postVideogames(Data));
+			console.log(res)
 			if (res) {
 				showServerMessage("Submit OK = " + "Videojuego agregado a la DB con éxito", "success");
 				setData({
@@ -133,7 +134,7 @@ function AddForm() {
 						autoComplete="off"
 						placeholder="Nombre"
 					/>
-					{/* {Data.name === "" && <span className={style.error}>Campo obligatorio</span>} */}
+					{/* TODO {Data.name === "" && <span className={style.error}>Campo obligatorio</span>} */}
 					<label htmlFor="description_raw">Descripción:</label>
 					<input
 						type="text"

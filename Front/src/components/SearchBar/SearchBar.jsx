@@ -2,7 +2,7 @@ import { useState } from "react";
 import style from "./SearchBar.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { BUSCARNAME } from "../../Redux/Actions";
-import { showServerMessage } from "../../server-messages";
+import { showServerMessage } from "../../Utils/server-messages";
 
 export default function SearchBar() {
 	const [input, setInput] = useState("");
