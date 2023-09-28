@@ -19,7 +19,7 @@ const postVideogames = async (req, res) => {
 			background_image,
 		} = req.body;
 
-		const videogame = await Videogame.findOrCreate({
+		const [videogame, created] = await Videogame.findOrCreate({
 			where: {
 				name,
 				description_raw,
@@ -28,7 +28,7 @@ const postVideogames = async (req, res) => {
 				background_image,
 			},
 		});
-		console.log("genres", genres)
+		if (created){
 		const genresDb = await Genre.findAll({
 			where: {
 				name: {
@@ -36,7 +36,7 @@ const postVideogames = async (req, res) => {
 				},
 			},
 		});
-		console.log("platforms", platforms)
+
 		const platformsDb = await Platform.findAll({
 			where: {
 				name: {
@@ -44,12 +44,15 @@ const postVideogames = async (req, res) => {
 				},
 			},
 		});
-		console.log("platformsDb", platformsDb)
+
 		await videogame[0].addPlatforms(platformsDb);
 		await videogame[0].addGenres(genresDb);
 		return res
 			.status(200)
 			.json({ message: "Videojuego agregado a la DB con éxito" });
+		} else {
+			return res.status(400).json({ message: "El videojuego ya existe" });
+		}
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ message: "Error interno del servidor" });

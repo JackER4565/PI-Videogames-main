@@ -37,7 +37,6 @@ function Detail() {
 	}
 	return (
 		<>
-			{console.log(videogame)}
 			<Link
 				className={styles.link}
 				to={`/home/${pagenumber}`}>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./SearchBar.module.css";
+import style from "./SearchBar.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { BUSCARNAME } from "../../Redux/Actions";
 import { showServerMessage } from "../../server-messages";
@@ -22,27 +22,29 @@ export default function SearchBar() {
 	// delFilter
 	const buscarNombre = useSelector((state) => state.buscarNombre);
 	const delFilter = () => {
-		dispatch({ type: BUSCARNAME, payload: "x_X" });
+		dispatch({ type: BUSCARNAME, payload: undefined });
 	};
 
 	return (
-		<div className={styles.container}>
-			{buscarNombre !== "" && buscarNombre !== "x_X" ? (
-			<button onClick={() => delFilter()}>Borrar búsqueda</button>) : (<>
-			<span>Buscar: </span>
-			<input
-				type="text"
-				onChange={handleChange}
-				value={input}
-				placeholder="Nombre Videojuego"
-			/>
-			<button onClick={buscarVideojuego}>Buscar</button>
-			</>)}
+		<div className={style.container}>
+			{buscarNombre !== "" && buscarNombre !== undefined ? (
+				<button onClick={() => delFilter()}>Borrar búsqueda</button>
+			) : (
+				<><div>
+					<h4 className={style.subtitle}>Buscar:</h4>
+					<input
+						type="text"
+						className={style.input}
+						onChange={handleChange}
+						value={input}
+						placeholder="Nombre Videojuego"
+					/>
+					</div>
+					<button onClick={buscarVideojuego}>Buscar</button>
+				</>
+			)}
 		</div>
 	);
 }
 
 // SearchBar: un input de búsqueda para encontrar videojuegos por nombre.
-
-
-

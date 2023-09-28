@@ -5,7 +5,7 @@ import styles from "./Landing.module.css";
 function Landing() {
 	return (
 		<div className={styles.container}>
-			Bienvenido!
+			<h1>Bienvenido!</h1>
 			<img
 				src={img}
 				alt="videogame"

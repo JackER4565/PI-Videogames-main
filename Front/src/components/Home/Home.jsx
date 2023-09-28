@@ -24,13 +24,12 @@ function Home() {
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [videogamesPerPage, setVideogamesPerPage] = useState(5);
-
-	const [test, setTest] = useState(null);
+	const [search, setSearch] = useState(null);
 
 	let videogames = useSelector((state) => state.videogames);
-	const orden = useSelector((state) => state.orden);
+	const order = useSelector((state) => state.orden);
 	const genFilter = useSelector((state) => state.genFilter);
-	const busqueda = useSelector((state) => state.buscarNombre);
+	const findBox = useSelector((state) => state.buscarNombre);
 
 	const dispatch = useDispatch();
 
@@ -50,22 +49,21 @@ function Home() {
 		run();
 	}, [dispatch]);
 
-	if (busqueda && busqueda !== "x_X") {
+	if (findBox && findBox !== undefined) {
 		videogames = videogames.filter((v) =>
-			v.name.toLowerCase().includes(busqueda.toLowerCase())
+			v.name.toLowerCase().includes(findBox.toLowerCase())
 		);
 	}
 
-	// if (videogames.length === 0) {
-		if (busqueda && busqueda !== "x_X") {
-			if (!test) {
+
+		if (findBox && findBox !== undefined) {
+			if (!search) {
 				// TODO poner loading 
 				axios
 					.get(
-						`http://localhost:3001/videogames?name=${busqueda.toLowerCase()}`
+						`http://localhost:3001/videogames?name=${findBox.toLowerCase()}`
 					)
 					.then((res) => {
-						console.log(res.data);
 						const newVideogames = res.data.map((game) => ({
 							id: game.id,
 							name: game.name,
@@ -73,7 +71,7 @@ function Home() {
 							genres: game.genres,
 						}));
 
-						setTest([...newVideogames]);
+						setSearch([...newVideogames]);
 					})
 
 					.catch((err) => {
@@ -82,20 +80,19 @@ function Home() {
 
 			}
 		}
-	// }
-	if (test && busqueda !== "x_X") {
-		console.log(test)
-		videogames = test;
+
+	if (search && findBox !== undefined) {
+		videogames = search;
 	}
 
 	// Ordenado
-	if (orden === "asc") {
+	if (order === "asc") {
 		videogames.sort((a, b) => {
 			if (a.name > b.name) return 1;
 			if (a.name < b.name) return -1;
 			return 0;
 		});
-	} else if (orden === "desc") {
+	} else if (order === "desc") {
 		videogames.sort((a, b) => {
 			if (a.name > b.name) return -1;
 			if (a.name < b.name) return 1;

@@ -3,9 +3,17 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    /* right: 0px; */
     position: relative;
     gap: 15px;
-    /* width: 100%; */
-    /* top: 20px; */
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.input {
+    font-size: 1.2rem;
+    font-weight: 500;
 }
