@@ -17,7 +17,6 @@ function Detail() {
 		axios
 			.get(endpoint)
 			.then((data) => {
-				console.log("detail ", data.data);
 				if (data.data) {
 					setVideogame(data.data);
 				} else {

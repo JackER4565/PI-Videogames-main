@@ -96,13 +96,13 @@
 }
 
 .form select {
-  margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
 }
 
 
 .form input {
+  min-width: 185px;
   padding: 10px;
   border-radius: 5px;
   overflow: hidden;

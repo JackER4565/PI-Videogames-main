@@ -11,7 +11,6 @@ const { Op } = require("sequelize");
 // Debe buscar tanto los de la API como los de la base de datos.
 const videogames = async (req, res) => {
 	const { name } = req.query;
-	console.log("name", name)
 	if (name) {
 
 		try {
@@ -40,7 +39,6 @@ const videogames = async (req, res) => {
 						`https://api.rawg.io/api/games?key=${API_KEY}&search=${nameguion}&page_size=${15 - videogamesDB.length}`
 					)
 				).data.results;
-				console.log("videogamesApi", videogamesApi)
 				const cleanVideogamesApi = videogamesApi.map((videogame) => {
 					return {
 						id: videogame.id,
@@ -63,11 +61,9 @@ const videogames = async (req, res) => {
 					}
 				});
 				
-				console.log("cleanVideogamesApi", cleanVideogamesApi)
 				return res.status(200).json(completeVideogames);
 			}
 		} catch (error) {
-			console.log(error);
 			return res
 				.status(500)
 				.json({ message: "Error al intentar llamar a la API.", error: error });
@@ -102,10 +98,9 @@ const videogames = async (req, res) => {
 		const completeVideogames = videogamesDB.concat(cleanVideogamesApi);
 		return res.status(200).json(completeVideogames);
 	} catch (error) {
-		console.log(error);
 		return res
 			.status(500)
-			.json({ message: "Error al intentar llamar a la API.", error: error });
+			.json({ message: "Error al intentar llamar a la API." });
 	}
 };
 

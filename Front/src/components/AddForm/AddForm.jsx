@@ -54,7 +54,7 @@ function AddForm() {
 			});
 			const res = await dispatch(postVideogames(Data));
 			if (res) {
-				showServerMessage("Submit OK = " + res.message, "success");
+				showServerMessage("Submit OK = " + "Videojuego agregado a la DB con éxito", "success");
 				setData({
 					name: "",
 					background_image: "",

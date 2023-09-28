@@ -34,11 +34,9 @@ const searchVideogames = async (req, res) => {
 				},
 			],
 		});
-		console.log("videogameDb", videogameDb);
 		if (videogameDb) {
 			return res.status(200).json(videogameDb);
 		} else {
-			console.log("no lo encontró en la db");
 
 			const videogameApi = await axios.get(
 				`https://api.rawg.io/api/games/${idVideogame}?key=${API_KEY}`
@@ -62,7 +60,6 @@ const searchVideogames = async (req, res) => {
 			}
 		}
 	} catch (error) {
-		// console.log(error);
 		return res
 			.status(500)
 			.json({ message: "Error interno del servidor", error: error.message });

@@ -28,31 +28,24 @@ function Filters() {
 				<h4 className={style.subtitle}>Orden:</h4>
 				<select
 					onChange={handleOrden()}
-					className={style.select}>
-					<option value=""></option>
-					<option
-						value="asc"
-						{...(getOrden === "asc" ? { selected: true } : null)}>
-						Ascendente
-					</option>
-					<option
-						value="desc"
-						{...(getOrden === "desc" ? { selected: true } : null)}>
-						Descendente
-					</option>
+					className={style.select}
+					value={getOrden}>
+					<option value="DEFAULT"></option>
+					<option value="asc">Ascendente</option>
+					<option value="desc">Descendente</option>
 				</select>
 			</div>
 			<div>
 				<h4 className={style.subtitle}>Genero:</h4>
 				<select
 					className={style.select}
-					onChange={handleGenChange()}>
+					onChange={handleGenChange()}
+					value={getGenFilter}>
 					<option value="all">All</option>
 					{generos.map((g) => (
 						<option
 							key={g.id}
-							value={g.id}
-							{...(g.id == getGenFilter ? { selected: true } : null)}>
+							value={g.id}>
 							{g.name}
 						</option>
 					))}
