@@ -33,6 +33,7 @@ const postVideogames = async (req, res) => {
 
 		if (created){
 		const genresDb = await Genre.findAll({
+			attributes: ["id", "name"],
 			where: {
 				name: {
 					[Op.in]: genres,
@@ -50,9 +51,15 @@ const postVideogames = async (req, res) => {
 
 		await videogame.addPlatforms(platformsDb);
 		await videogame.addGenres(genresDb);
+		const retorno = await Videogame.findOne({
+			where: {
+				name,
+			},
+			include: [Genre],
+		});
 		return res
 			.status(200)
-			.json(videogame);
+			.json(retorno);
 		} else {
 			return res.status(400).json({ message: "El videojuego ya existe" });
 		}

@@ -39,21 +39,23 @@ export const buscarVideogame = (input) => {
 };
 
 export const postVideogames = (input) => {
-	return async (dispatch) => {
+	return (dispatch) => {
 		try {
-			const response = await axios.post(
+			axios.post(
 				"http://localhost:3001/videogames",
 				input
+			).then((res) => {
+				const { id, name, background_image, genres } = res.data;				
+				const cleanData = [{
+					id,
+					name,
+					background_image,
+					genres,
+			}];
+				console.log(cleanData)
+				dispatch({ type: VIDEOGAMES, payload: cleanData });
+			}
 			);
-			const cleanData = await response.data.map((e) => {
-				return {
-					id: e.id,
-					name: e.name,
-					imagen: e.imagen,
-					genres: e.genres,
-				};
-			});
-			dispatch({ type: VIDEOGAMES, payload: [cleanData] });
 			return true;
 		} catch (error) {
 			error.response.data.message
@@ -81,6 +83,7 @@ export const videogames = () => async (dispatch) => {
 		const endpoint = "http://localhost:3001/videogames";
 		const response = await axios.get(endpoint);
 		const data = await response.data;
+		console.log(data)
 		return dispatch({
 			type: VIDEOGAMES,
 			payload: data,

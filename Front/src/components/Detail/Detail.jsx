@@ -35,31 +35,14 @@ function Detail() {
 		return <h1>Loading...</h1>;
 	}
 
-	const edit = () => {
-		showServerMessage("Función no implementada", "error");
-	}
 
 	return (
 		<>
-		<div className={styles.botones}>
 			<Link
 				className={styles.link}
 				to={`/home/${pagenumber}`}>
 				Volver
 			</Link>
-			{/* <Link 
-				className={styles.link}
-				to={`/edit/${id}`}>
-				Editar
-			</Link> */}
-			<a className={styles.link} href="#" onClick={edit}>Editar</a>
-			{/* <button className={styles.link} onClick={edit}>Editar</button> */}
-			<Link
-				className={styles.link}
-				to={`/delete/${id}`}>
-				Eliminar
-			</Link>
-			</div>
 			<div className={styles.container}>
 				<div className={styles.card}>
 					<h1>{videogame.name}</h1>

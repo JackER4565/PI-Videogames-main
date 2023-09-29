@@ -53,7 +53,6 @@ function AddForm() {
 				platforms: Data.platforms.map((platform) => platform.trim()),
 			});
 			const res = await dispatch(postVideogames(Data));
-			console.log(res)
 			if (res) {
 				showServerMessage("Submit OK = " + "Videojuego agregado a la DB con éxito", "success");
 				setData({
