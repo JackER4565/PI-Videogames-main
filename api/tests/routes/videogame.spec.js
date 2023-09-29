@@ -107,7 +107,7 @@ describe("Videogame routes", () => {
 				.expect("Content-Type", /json/)
 				.expect(function (res) {
           res.body.forEach(element => {
-            if (element.name === "Xbox One") expect(element.name).to.be.equal("Xbox One");
+            // if (element.name === "Xbox One") expect(element.name).to.be.equal("Xbox One");
             if (element.id == 1) expect(element.name).to.be.equal("Xbox One");      
           });
 					// expect(res.body[0].name).to.be.equal("Xbox One");

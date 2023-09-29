@@ -52,7 +52,6 @@ export const postVideogames = (input) => {
 					background_image,
 					genres,
 			}];
-				console.log(cleanData)
 				dispatch({ type: VIDEOGAMES, payload: cleanData });
 			}
 			);

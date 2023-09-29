@@ -121,7 +121,7 @@ function Home() {
 		});
 		
 	}
-	console.log(videogames)
+
 	// Paginado
 	const indexOfLastVideogame = currentPage * videogamesPerPage;
 	const indexOfFirstVideogame = indexOfLastVideogame - videogamesPerPage;
